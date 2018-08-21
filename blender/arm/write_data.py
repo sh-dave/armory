@@ -10,7 +10,7 @@ import arm.make_state as state
 
 def add_armory_library(sdk_path, name, rel_path=False):
     if rel_path:
-        sdk_path = '../' + os.path.relpath(sdk_path, arm.utils.get_fp()).replace('\\', '/')
+        sdk_path = os.path.relpath(sdk_path, arm.utils.get_fp()).replace('\\', '/')
     return ('project.addLibrary("' + sdk_path + '/' + name + '");\n').replace('\\', '/').replace('//', '/')
 
 def add_assets(path, quality=1.0, use_data_dir=False, rel_path=False):
@@ -80,7 +80,7 @@ project.addSources('Sources');
             for lib in libs:
                 if os.path.isdir('Libraries/' + lib):
                     f.write('project.addLibrary("{0}");\n'.format(lib.replace('//', '/')))
-        
+
         # Subprojects, merge this with libraries
         if os.path.exists('Subprojects'):
             libs = os.listdir('Subprojects')
@@ -212,7 +212,7 @@ project.addSources('Sources');
         if wrd.arm_formatlib == 'Enabled':
             if not os.path.exists('Libraries/iron_format'):
                 f.write(add_armory_library(sdk_path, 'lib/iron_format', rel_path=rel_path))
-        
+
         if wrd.arm_minimize == False:
             assets.add_khafile_def('arm_json')
 
